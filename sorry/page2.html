@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Choose</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    background:#f9bcd6;
+    font-family:'Segoe UI', sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    position:relative;
+}
+
+.container{
+    display:flex;
+    gap:100px;
+    align-items:flex-start;
+    position:relative;
+    z-index:2;
+}
+
+.card{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+}
+
+.photo-wrapper{
+    width:170px;
+    height:250px; /* same space for both images */
+    display:flex;
+    justify-content:center;
+    align-items:flex-end;
+    margin-bottom:20px;
+}
+
+.photo{
+    width:150px;
+    max-height:250px;
+    object-fit:contain; /* keeps full image visible */
+    border-radius:20px;
+}
+
+.btn{
+    padding:15px 40px;
+    border:none;
+    border-radius:40px;
+    background:#f48fb1;
+    color:white;
+    font-size:22px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.btn:hover{
+    background:#ec709c;
+    transform:scale(1.05);
+}
+
+/* Sparkles */
+.sparkle{
+    position:absolute;
+    background:white;
+    border-radius:50%;
+    box-shadow:0 0 8px white;
+    opacity:0;
+    animation:floatSparkle linear infinite;
+}
+
+@keyframes floatSparkle{
+    0%{
+        transform:translateY(100vh) scale(0);
+        opacity:0;
+    }
+    20%,80%{
+        opacity:1;
+    }
+    100%{
+        transform:translateY(-120px) scale(1);
+        opacity:0;
+    }
+}
+
+/* Pixel Window */
+.pixel-window{
+    position:fixed;
+    top:50%;
+    left:50%;
+    width:450px;
+    max-width:90%;
+    background:white;
+    border:4px solid black;
+    box-shadow:10px 10px 0 black;
+    transform:translate(-50%,-50%) scale(0);
+    opacity:0;
+    transition:.3s;
+    z-index:9999;
+    font-family:"Courier New", monospace;
+}
+
+.pixel-window.show{
+    transform:translate(-50%,-50%) scale(1);
+    opacity:1;
+}
+
+.pixel-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px;
+    border-bottom:4px solid black;
+    font-weight:bold;
+}
+
+.pixel-close{
+    width:35px;
+    height:35px;
+    border:3px solid black;
+    background:white;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.pixel-close:hover{
+    background:#ffd7e5;
+}
+
+.pixel-content{
+    padding:25px;
+    text-align:center;
+    line-height:1.8;
+    font-size:18px;
+}
+
+/* Floating Photos */
+.floating-photo{
+    position:absolute;
+    width:110px;
+    border-radius:15px;
+    pointer-events:none;
+    z-index:1;
+    animation:fall 6s ease-in-out forwards;
+}
+
+@keyframes fall{
+    0%{
+        opacity:0;
+        transform:translateY(-120px) scale(.5) rotate(-15deg);
+    }
+    15%{
+        opacity:1;
+    }
+    60%{
+        opacity:1;
+    }
+    100%{
+        opacity:0;
+        transform:translateY(110vh) scale(1.1) rotate(20deg);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+        <div class="photo-wrapper">
+            <img src="image2.png" alt="Photo" class="photo">
+        </div>
+        <button class="btn" id="openMeBtn">Open Me</button>
+    </div>
+
+    <div class="card">
+        <div class="photo-wrapper">
+            <img src="image3.png" alt="Photo" class="photo">
+        </div>
+        <button class="btn" id="getMeBtn">Get Me</button>
+    </div>
+
+</div>
+
+<!-- Pixel Window -->
+<div id="pixelWindow" class="pixel-window">
+
+    <div class="pixel-header">
+        <span>Love YOU.exe</span>
+        <button class="pixel-close" id="closeWindow">X</button>
+    </div>
+
+    <div class="pixel-content">
+        <h2>Hey</h2>
+
+        <p>
+            To begin with i'm really sorry.<br>
+            I may gave u the wrong idea and maybe u think
+            i don't care but in reality i really really wanted
+            to see u that day more than anything else.
+            i'm missing u more than u think and want to tell u that
+            every day every hour and every second.
+        </p>
+
+        <p>
+            Thank you for being by my side. 🌸<br>
+            ehm : tfouh 😗
+        </p>
+    </div>
+
+</div>
+
+<script>
+
+/* Sparkles */
+const sparkleCount = 60;
+
+for(let i=0;i<sparkleCount;i++){
+    const sparkle=document.createElement("div");
+
+    sparkle.classList.add("sparkle");
+
+    const size=Math.random()*4+2;
+
+    sparkle.style.width=size+"px";
+    sparkle.style.height=size+"px";
+    sparkle.style.left=Math.random()*100+"vw";
+
+    sparkle.style.animationDuration=
+        (4+Math.random()*6)+"s";
+
+    sparkle.style.animationDelay=
+        Math.random()*6+"s";
+
+    document.body.appendChild(sparkle);
+}
+
+/* Open Me */
+const openBtn=document.getElementById("openMeBtn");
+const closeBtn=document.getElementById("closeWindow");
+const pixelWindow=document.getElementById("pixelWindow");
+
+openBtn.addEventListener("click",()=>{
+    pixelWindow.classList.add("show");
+});
+
+closeBtn.addEventListener("click",()=>{
+    pixelWindow.classList.remove("show");
+});
+
+/* Get Me */
+document.getElementById("getMeBtn")
+.addEventListener("click",()=>{
+
+    const totalPhotos=40;
+
+    for(let i=0;i<totalPhotos;i++){
+
+        setTimeout(()=>{
+
+            const img=document.createElement("img");
+
+            img.src="image.png";
+
+            img.classList.add("floating-photo");
+
+            img.style.left=
+                Math.random()*
+                (window.innerWidth-120)+"px";
+
+            img.style.animationDuration=
+                (4+Math.random()*3)+"s";
+
+            document.body.appendChild(img);
+
+            img.addEventListener("animationend",()=>{
+                img.remove();
+            });
+
+        },i*120);
+
+    }
+
+});
+</script>
+
+</body>
+</html>
